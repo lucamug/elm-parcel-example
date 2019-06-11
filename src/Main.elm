@@ -1,4 +1,51 @@
-import Html
+module Main exposing (main)
 
+import Browser
+import Html exposing (Html, button, div, text)
+import Html.Events exposing (onClick)
+
+
+type alias Model =
+    { count : Int
+    , ciao : String
+    }
+
+
+initialModel : Model
+initialModel =
+    { count = 0
+    , ciao = "hi"
+    }
+
+
+type Msg
+    = Increment
+    | Decrement
+
+
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        Increment ->
+            { model | count = model.count + 1 }
+
+        Decrement ->
+            { model | count = model.count - 1 }
+
+
+view : Model -> Html Msg
+view model =
+    div []
+        [ button [ onClick Increment ] [ text "+1 tssxxxvvvv" ]
+        , div [] [ text <| String.fromInt model.count ]
+        , button [ onClick Decrement ] [ text "-1" ]
+        ]
+
+
+main : Program () Model Msg
 main =
-  Html.text "Hello World"
+    Browser.sandbox
+        { init = initialModel
+        , view = view
+        , update = update
+        }
